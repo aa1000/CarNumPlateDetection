@@ -48,10 +48,12 @@ if not os.path.isdir(folders_path+ 'Output'):
 
 for folder in folders:
 	files_path = folder
-	txt_files = glob(files_path + '*.txt')
 	print('\nFolder: ' + files_path)
+
+	txt_files = glob(files_path + '*.txt')
 	img_files = glob(files_path + '*.JPG')
 	img_files.extend(glob(files_path + '*.JPEG'))
+	
 
 	# windows is case insensitive so we don't need to add this
 	if not platform().startswith('Windows'):
@@ -106,6 +108,7 @@ for folder in folders:
 
 	if len(txt_files) > 0:
 	    print(result % flawed_data)
+	    print('\nFound %d image(s)' %len(img_files))
 	else:
 	    print('no files found at %s...' % folder)
 
@@ -146,8 +149,10 @@ i = 0
 while i < len(txt_files):
 	txt = txt_files[i]
 	line = open(txt, encoding='utf8').readline().split()
-	print(line[0])
-	img = cv2.imread(line[0])
+
+	img_path = folders_path + '/Output/' + line[0]
+	img = cv2.imread(img_path)
+
 	img = img.copy()
 
 	x, y, w, h = [int(word) for word in line[1:5]]
