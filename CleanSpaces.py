@@ -1,4 +1,4 @@
-from glob import glob
+from glob2 import glob
 from os import rename
 from platform import platform
 
