@@ -1,4 +1,4 @@
-import cv2, time
+import sys, argparse, cv2, time
 from glob2 import glob
 import os, os.path
 from shutil import copy as fcopy
@@ -13,6 +13,16 @@ newHeight = None
 # speed-up opencv using multithreads
 cv2.setUseOptimized(True);
 cv2.setNumThreads(8);
+
+#parser = argparse.ArgumentParser(description='Checks the image data for faults, copies the correct data into a new folder then displays the correct image.')
+#parser.add_argument('integers', metavar='N', type=int, nargs='+',
+#                    help='an integer for the accumulator')
+#parser.add_argument('--sum', dest='accumulate', action='store_const',
+#                    const=sum, default=max,
+#                    help='sum the integers (default: find the max)')
+
+#args = parser.parse_args()
+
 	
 
 def CheckIfNumeric(list):
@@ -60,10 +70,10 @@ for folder in folders:
 		while i < len(data):
 			# Remove -ve values from file
 			if data[i].startswith('-'):
-				#x = int(data[i])
-				#new_width = int(data[i+2]) + x
+				cord = int(data[i])
+				new_size = int(data[i+2]) + cord
 				data[i] = str(0)
-				#data[i+2] = str(new_width)
+				data[i+2] = str(new_size)
 
 			# Fix Spaces in Mini Bus and Trucks
 			if data[i] == 'Bus' or data[i] == 'Truck':
