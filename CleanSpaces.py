@@ -4,6 +4,13 @@ from platform import platform
 
 txt_files = glob('*.txt')
 
+def isgdig(check_str):
+	try:
+		int(check_str)
+		return True
+	except ValueError:
+		return  False
+
 for txt_file in txt_files:
 	txt_split = txt_file.split()
 	if len(txt_split) > 1:
@@ -12,9 +19,7 @@ for txt_file in txt_files:
 		f.close()
 		data = line.split()
 		for i in range(len(data)-1):
-			#print(txt_file)
-			#print(data[i], data[i+1])
-			if data[i].find('.') > 0 and data[i+1].isdigit():
+			if data[i].find('.') > 0 and isgdig(data[i+1]):
 				new_name = data[0:i+1]
 				data[i] = ''.join(new_name)
 				data = data[i:]
@@ -24,8 +29,6 @@ for txt_file in txt_files:
 				f.truncate()
 				f.close()
 				break
-				#for j in range(1, i):
-				#	data.remove(data[j])
 		new_txt_name = ''.join(txt_split)
 		print('\nChanging file %s name to %s ..' % (txt_file, new_txt_name))
 		rename(txt_file, new_txt_name)
