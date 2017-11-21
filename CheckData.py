@@ -1,4 +1,4 @@
-import sys, argparse, cv2, time
+import cv2, time
 from glob2 import glob
 import os, os.path
 from shutil import copy as fcopy
@@ -13,16 +13,6 @@ newHeight = None
 # speed-up opencv using multithreads
 cv2.setUseOptimized(True);
 cv2.setNumThreads(8);
-
-#parser = argparse.ArgumentParser(description='Checks the image data for faults, copies the correct data into a new folder then displays the correct image.')
-#parser.add_argument('integers', metavar='N', type=int, nargs='+',
-#                    help='an integer for the accumulator')
-#parser.add_argument('--sum', dest='accumulate', action='store_const',
-#                    const=sum, default=max,
-#                    help='sum the integers (default: find the max)')
-
-#args = parser.parse_args()
-
 	
 
 def CheckIfNumeric(list):
@@ -59,7 +49,37 @@ for folder in folders:
 	if not platform().startswith('Windows'):
 	    img_files.extend(glob(files_path + '*.jpg'))
 	    img_files.extend(glob(files_path + '*.jpeg'))
+	
+		
+	for txt_file in txt_files:
+		f = open(txt_file, 'r', encoding='utf8')
+		line = f.readline()
+		f.close()
+		data = line.split()
+		i = 0
+		while i < len(data):
+			# Remove -ve values from file
+			if data[i].startswith('-'):
+				#x = int(data[i])
+				#new_width = int(data[i+2]) + x
+				data[i] = str(0)
+				#data[i+2] = str(new_width)
 
+			# Fix Spaces in Mini Bus and Trucks
+			if data[i] == 'Bus' or data[i] == 'Truck':
+				#print('\n', data)
+				data[i-1] = '_'.join(data[i-1:i+1])
+				data.remove(data[i])
+				#print('\n', data)
+				
+			i += 1
+			
+
+		f = open(txt_file, 'w', encoding='utf8')
+		write_line = ' '.join(data)
+		f.write(write_line)
+		f.truncate()
+		f.close()
 
 	flawed_data = 0
 	for txt_file in txt_files:
