@@ -11,9 +11,7 @@ for txt_file in txt_files:
 	for i in range(1, 5):
 		j = i +4
 		data[i], data[j] = data[j], data[i]
-	#data[2], data[6] = data[], data[6]
-	#data[1], data[2] = data[5], data[6]
-	#data[1], data[2] = data[5], data[6]
+		
 	f = open(txt_file, 'w', encoding='utf8')
 	write_line = ' '.join(data)
 	f.write(write_line)
