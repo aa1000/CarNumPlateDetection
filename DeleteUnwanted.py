@@ -6,8 +6,6 @@ file_path = input('enter text file path: ')
 with open(file_path) as f:
 	for line in f:
 		line = line.rstrip('\n')
-		print('line : ' + line)
-		#line = f.readline()
 		if os.path.isfile(line):
 			os.remove(line)
 			print('Deleting ' + line)
