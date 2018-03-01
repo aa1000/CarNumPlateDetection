@@ -1,3 +1,4 @@
+#Cleans Spaces in file names becuase they cause problems with splitting strings
 from glob2 import glob
 from os import rename
 from platform import platform
@@ -35,7 +36,7 @@ for txt_file in txt_files:
 
 		
 
-
+#get all jpg image files
 img_files = glob('*.JPG')
 img_files.extend(glob('*.JPEG'))
 
@@ -44,6 +45,7 @@ if not platform().startswith('Windows'):
     img_files.extend(glob('*.jpg'))
     img_files.extend(glob('*.jpeg'))
 
+#Change the names of the image files
 for img_file in img_files:
 	img_split = img_file.split()
 	if len(img_split) > 1:
